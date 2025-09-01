@@ -1,8 +1,0 @@
-query getBoardGroups($boardId: ID!) {
-  boards(ids: [$boardId]) {
-    groups {
-      id
-      title
-    }
-  }
-}
