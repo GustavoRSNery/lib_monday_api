@@ -1,0 +1,112 @@
+2025-08-27 17:28:59,097 - ERROR - {
+    "timestamp": "2025-08-27T17:28:59.097536",
+    "status_code": 200,
+    "elapsed_time": "0:00:01.747237",
+    "error_type": "Exception",
+    "error_message": "Resposta inesperada da API: {'data': {'create_group': {'id': 'group_mkv77r6w'}}, 'extensions': {'request_id': 'ab6c300b-7f6a-9afb-b106-b073cca4ecb6'}}",
+    "request_body": {
+        "query": "mutation createGroup($boardId: ID!, $groupName: String!) {\n  create_group(board_id: $boardId, group_name: $groupName) {\n    id\n  }\n}",
+        "variables": {
+            "boardId": 9382957552,
+            "groupName": "Teste de 2025-08-27 17:28"
+        }
+    }
+}
+2025-08-27 17:53:59,762 - ERROR - {
+    "timestamp": "2025-08-27T17:53:59.762408",
+    "status_code": 200,
+    "elapsed_time": "0:00:02.119630",
+    "error_type": "Exception",
+    "error_message": "Resposta inesperada da API: {'data': {'create_group': {'id': 'group_mkv7mrvs'}}, 'extensions': {'request_id': 'efb7445d-1eb1-972c-ac1f-60b2de5fe805'}}",
+    "request_body": {
+        "query": "mutation createGroup($boardId: ID!, $groupName: String!) {\n  create_group(board_id: $boardId, group_name: $groupName) {\n    id\n  }\n}",
+        "variables": {
+            "boardId": 9382957552,
+            "groupName": "Teste de 2025-08-27 17:53"
+        }
+    }
+}
+2025-08-27 18:16:16,966 - ERROR - [DATA_IMPORT_MONDAY]-Falha ao inicializar ColunaIDMapper para o quadro 9382957552. Erro: ColunaIDMapper.__create_map() is inaccessible due to its protection level
+2025-08-27 18:23:27,959 - ERROR - [DATA_IMPORT_MONDAY]-Falha ao inicializar ColunaIDMapper para o quadro 9382957552. Erro: Nenhum item encontrado no quadro 9382957552 para mapear colunas.
+2025-08-28 10:10:57,164 - ERROR - [DATA_IMPORT_MONDAY]-Falha ao identificar a coluna de nome do Elemento para o quadro. Erro: Coluna 'Elemento' não foi encontrada no quadro 9382957552 mesmo após a atualização.
+2025-08-28 10:22:14,656 - ERROR - [DATA_IMPORT_MONDAY]-Falha ao identificar a coluna de nome do Elemento para o quadro. Erro: Coluna 'Elemento' não foi encontrada no quadro 9382957552 mesmo após a atualização.
+2025-08-28 12:30:50,149 - ERROR - {
+    "timestamp": "2025-08-28T12:30:50.149222",
+    "status_code": 200,
+    "elapsed_time": "0:00:01.272720",
+    "error_type": "Exception",
+    "error_message": "Erro na consulta GraphQL: [{'message': \"This status label doesn't exist, possible statuses are: {0: Em andamento, 1: Feito, 2: Parado, 7: A fazer, 12: , 14: }\", 'locations': [{'line': 1, 'column': 112}], 'path': ['create_item'], 'extensions': {'code': 'ColumnValueException', 'status_code': 200, 'error_data': {'column_type': 'color', 'column_id': 'status', 'column_value': '{\"label\"=>\"Travado\"}', 'column_validation_error_code': 'missingLabel', 'column_name': 'Status'}, 'service': 'monolith'}}]",
+    "request_body": {
+        "query": "mutation createItem($boardId: ID!, $groupId: String!, $itemName: String!, $columnValues: JSON!) {\n  create_item(\n    board_id: $boardId,\n    group_id: $groupId,\n    item_name: $itemName,\n    column_values: $columnValues\n  ) {\n    id\n  }\n}",
+        "variables": {
+            "boardId": 9382957552,
+            "groupId": "group_mkv8ax4b",
+            "itemName": "Criar UI/UX v2",
+            "columnValues": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-09-10\"}, \"status\": {\"label\": \"Travado\"}}"
+        }
+    }
+}
+2025-08-28 12:30:50,153 - ERROR - [DATA_IMPORT_MONDAY]Falha ao processar a linha 1 para o item 'Criar UI/UX v2'. Causa: Erro na consulta GraphQL: [{'message': "This status label doesn't exist, possible statuses are: {0: Em andamento, 1: Feito, 2: Parado, 7: A fazer, 12: , 14: }", 'locations': [{'line': 1, 'column': 112}], 'path': ['create_item'], 'extensions': {'code': 'ColumnValueException', 'status_code': 200, 'error_data': {'column_type': 'color', 'column_id': 'status', 'column_value': '{"label"=>"Travado"}', 'column_validation_error_code': 'missingLabel', 'column_name': 'Status'}, 'service': 'monolith'}}]
+2025-08-28 16:09:57,371 - ERROR - {
+    "timestamp": "2025-08-28T16:09:57.370651",
+    "status_code": 400,
+    "elapsed_time": "0:00:00.761975",
+    "error_type": "HTTPError",
+    "error_message": "400 Client Error: Bad Request for url: https://api.monday.com/v2",
+    "request_body": {
+        "query": "\n            mutation createMultipleItems($itemName_Desenvolver API v2: String!, $columnValues_0: JSON!, $itemName_Criar UI/UX v2: String!, $columnValues_1: JSON!, $itemName_Testar Módulo B v2: String!, $columnValues_2: JSON!, $boardId: ID!, $groupId: String!) {\n                \n                    item_0: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Desenvolver API v2,\n                        column_values: $columnValues_0\n                    ) { id }\n                 \n                    item_0: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Desenvolver API v2,\n                        column_values: $columnValues_0\n                    ) { id }\n                 \n                    item_0: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Desenvolver API v2,\n                        column_values: $columnValues_0\n                    ) { id }\n                 \n                    item_1: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Criar UI/UX v2,\n                        column_values: $columnValues_1\n                    ) { id }\n                 \n                    item_1: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Criar UI/UX v2,\n                        column_values: $columnValues_1\n                    ) { id }\n                 \n                    item_1: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Criar UI/UX v2,\n                        column_values: $columnValues_1\n                    ) { id }\n                 \n                    item_2: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Testar Módulo B v2,\n                        column_values: $columnValues_2\n                    ) { id }\n                 \n                    item_2: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Testar Módulo B v2,\n                        column_values: $columnValues_2\n                    ) { id }\n                 \n                    item_2: create_item(\n                        board_id: $boardId,\n                        group_id: $groupId,\n                        item_name: $itemName_Testar Módulo B v2,\n                        column_values: $columnValues_2\n                    ) { id }\n                \n            }\n        ",
+        "variables": {
+            "boardId": 9382957552,
+            "groupId": "group_mkv8dbtk",
+            "itemName_Desenvolver API v2": "Desenvolver API v2",
+            "columnValues_0": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-08-26\"}, \"status\": {\"label\": \"Feito\"}}",
+            "itemName_Criar UI/UX v2": "Criar UI/UX v2",
+            "columnValues_1": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-09-10\"}, \"status\": {\"label\": \"Travado\"}}",
+            "itemName_Testar Módulo B v2": "Testar Módulo B v2",
+            "columnValues_2": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-09-01\"}, \"status\": {\"label\": \"Em andamento\"}}"
+        }
+    }
+}
+2025-08-28 16:09:57,380 - ERROR - Falha ao processar o lote 1. Causa: 400 Client Error: Bad Request for url: https://api.monday.com/v2
+2025-08-28 16:23:17,829 - ERROR - {
+    "timestamp": "2025-08-28T16:23:17.829613",
+    "status_code": 400,
+    "elapsed_time": "0:00:00.635801",
+    "error_type": "HTTPError",
+    "error_message": "400 Client Error: Bad Request for url: https://api.monday.com/v2",
+    "request_body": {
+        "query": "\n            mutation createMultipleItems($itemName_Desenvolver_API_v2: String!, $columnValues_0: JSON!, $itemName_Criar_UI/UX_v2: String!, $columnValues_1: JSON!, $itemName_Testar_Módulo_B_v2: String!, $columnValues_2: JSON!, $boardId: ID!, $groupId: String!) {\n                \n                item_0: create_item(\n                    board_id: $boardId,\n                    group_id: $groupId,\n                    item_name: $itemName_Desenvolver_API_v2,\n                    column_values: $columnValues_0\n                ) { id }\n             \n                item_1: create_item(\n                    board_id: $boardId,\n                    group_id: $groupId,\n                    item_name: $itemName_Criar_UI/UX_v2,\n                    column_values: $columnValues_1\n                ) { id }\n             \n                item_2: create_item(\n                    board_id: $boardId,\n                    group_id: $groupId,\n                    item_name: $itemName_Testar_Módulo_B_v2,\n                    column_values: $columnValues_2\n                ) { id }\n            \n            }\n        ",
+        "variables": {
+            "boardId": 9382957552,
+            "groupId": "group_mkv821m8",
+            "itemName_Desenvolver_API_v2": "Desenvolver API v2",
+            "columnValues_0": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-08-26\"}, \"status\": {\"label\": \"Feito\"}}",
+            "itemName_Criar_UI/UX_v2": "Criar UI/UX v2",
+            "columnValues_1": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-09-10\"}, \"status\": {\"label\": \"Travado\"}}",
+            "itemName_Testar_Módulo_B_v2": "Testar Módulo B v2",
+            "columnValues_2": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-09-01\"}, \"status\": {\"label\": \"Em andamento\"}}"
+        }
+    }
+}
+2025-08-28 16:23:17,832 - ERROR - Falha ao processar o lote 1. Causa: 400 Client Error: Bad Request for url: https://api.monday.com/v2
+2025-08-28 16:24:30,724 - ERROR - {
+    "timestamp": "2025-08-28T16:24:30.724790",
+    "status_code": 400,
+    "elapsed_time": "0:00:00.606456",
+    "error_type": "HTTPError",
+    "error_message": "400 Client Error: Bad Request for url: https://api.monday.com/v2",
+    "request_body": {
+        "query": "\n            mutation createMultipleItems($itemName_Desenvolver_API_v2: String!, $columnValues_0: JSON!, $itemName_Criar_UI/UX_v2: String!, $columnValues_1: JSON!, $itemName_Testar_Módulo_B_v2: String!, $columnValues_2: JSON!, $boardId: ID!, $groupId: String!) {\n                \n                item_0: create_item(\n                    board_id: $boardId,\n                    group_id: $groupId,\n                    item_name: $itemName_Desenvolver_API_v2,\n                    column_values: $columnValues_0\n                ) { id }\n             \n                item_1: create_item(\n                    board_id: $boardId,\n                    group_id: $groupId,\n                    item_name: $itemName_Criar_UI/UX_v2,\n                    column_values: $columnValues_1\n                ) { id }\n             \n                item_2: create_item(\n                    board_id: $boardId,\n                    group_id: $groupId,\n                    item_name: $itemName_Testar_Módulo_B_v2,\n                    column_values: $columnValues_2\n                ) { id }\n            \n            }\n        ",
+        "variables": {
+            "boardId": 9382957552,
+            "groupId": "group_mkv8nhzj",
+            "itemName_Desenvolver_API_v2": "Desenvolver_API_v2",
+            "columnValues_0": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-08-26\"}, \"status\": {\"label\": \"Feito\"}}",
+            "itemName_Criar_UI/UX_v2": "Criar_UI/UX_v2",
+            "columnValues_1": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-09-10\"}, \"status\": {\"label\": \"Travado\"}}",
+            "itemName_Testar_Módulo_B_v2": "Testar_Módulo_B_v2",
+            "columnValues_2": "{\"person\": {\"personsAndTeams\": [{\"id\": 61907099, \"kind\": \"person\"}]}, \"data\": {\"date\": \"2025-09-01\"}, \"status\": {\"label\": \"Em andamento\"}}"
+        }
+    }
+}
+2025-08-28 16:24:30,727 - ERROR - Falha ao processar o lote 1. Causa: 400 Client Error: Bad Request for url: https://api.monday.com/v2

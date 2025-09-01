@@ -1,0 +1,6 @@
+setup.py
+src/extracao_monday.egg-info/PKG-INFO
+src/extracao_monday.egg-info/SOURCES.txt
+src/extracao_monday.egg-info/dependency_links.txt
+src/extracao_monday.egg-info/requires.txt
+src/extracao_monday.egg-info/top_level.txt
