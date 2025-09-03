@@ -59,7 +59,7 @@ def call_monday_api(query: str, variables: dict) -> dict:
             "elapsed_time": str(response.elapsed) if response is not None else "N/A",
             "error_type": type(e).__name__,
             "error_message": str(e),
-            "request_body": payload
+            # "request_body": payload
         }
         log_message = json.dumps(log_data, indent=4, ensure_ascii=False)
         api_logger.error(log_message)

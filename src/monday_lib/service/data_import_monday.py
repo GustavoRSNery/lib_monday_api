@@ -5,14 +5,14 @@ import logging
 from ..api_client.call_api import call_monday_api
 from ..mapper.column_map import ColunaIDMapper
 # from ..queries.templates import QUERY_CREATE_ITEM
-from ..utils.formatters import DEFAULT_FORMATTER, COLUMN_FORMATTERS
+from ..utils.formatters import DEFAULT_FORMATTER, COLUMN_FORMATTERS, ID_SPECIFIC_FORMATTERS
 from ..utils.logger import api_logger
 
 def create_items_in_group(board_id: int, 
                           group_id: str, 
                           df: pd.DataFrame, 
                           board_name: str,
-                          batch_size: int = 250,
+                          batch_size: int = 100,
                           column_map: dict = None) -> dict: 
     """
     Cria múltiplos itens em um grupo em lotes (batches) para otimizar a performance,
@@ -100,6 +100,7 @@ def create_items_in_group(board_id: int,
         batch_mutation_parts = []
         batch_vars_definition = []
         batch_vars_values = {"boardId": board_id, "groupId": group_id}
+        batch_start_time = time.monotonic()
 
         for index, row in batch_df.iterrows():
             _item_alias = f"item_{index}"
@@ -125,7 +126,14 @@ def create_items_in_group(board_id: int,
                 
                 monday_col_id = column_info['id']
                 column_type = column_info['type']
-                formatter = COLUMN_FORMATTERS.get(column_type, DEFAULT_FORMATTER)
+                formatter = None
+                # 1. Tenta encontrar um formatador específico para este ID de coluna
+                if monday_col_id in ID_SPECIFIC_FORMATTERS:
+                    formatter = ID_SPECIFIC_FORMATTERS[monday_col_id]
+                else:
+                # 2. Se não houver um, usa o sistema genérico baseado no TIPO da coluna
+                    formatter = COLUMN_FORMATTERS.get(column_type, DEFAULT_FORMATTER)
+                
                 formatted_value = formatter(value)
                 column_values_dict[monday_col_id] = formatted_value
 
@@ -164,8 +172,15 @@ def create_items_in_group(board_id: int,
         # --- PAUSA ESTRATÉGICA ---
         # Se este NÃO for o ultimo lote, espere 60 segundos.
         if i < total_batches - 1:
-            logging.info("Pausa de 60 segundos para renovar o limite de requisições da API...")
-            time.sleep(60)
+            batch_duration = time.monotonic() - batch_start_time
+            pause_duration = 60 - batch_duration
+            
+            if pause_duration > 0:
+                logging.info(f"Lote processado em {batch_duration:.2f}s. Pausando por {pause_duration:.2f}s para renovar o orçamento da API...")
+                time.sleep(pause_duration)
+            else:
+                logging.info(f"Lote processado em {batch_duration:.2f}s. Orçamento da API já renovado. Prosseguindo imediatamente.")
+            
 #----------------------------------------------------------------CRIAR BATH QUERY PARA SUBIR OS ITENS NO QUADRO------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------ENVIAR SUMARIO DOS ITENS CRIADOS------------------------------------------------------------------------------------------------
