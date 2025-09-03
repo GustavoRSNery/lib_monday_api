@@ -11,12 +11,12 @@ logging.basicConfig(
     format="%(asctime)s - [%(levelname)s] - [%(filename)s -> %(funcName)s()] - %(message)s"
 )
 
-from .main import extrair_dados_monday
-from .service.data_import_monday import create_items_in_group
-from .service.creat_group_monday import create_monday_group
-from .service.data_export_monday import extrair_dados_paginados
-from .api_client.call_api import call_monday_api
-from .service.get_id_column_monday import chamada_api_get_ids
-from .service.get_group_id_monday import get_group_id
-from .service.delete_group_monday import delete_monday_group
-from .mapper.column_map import ColunaIDMapper
+from .main import extrair_dados_monday                                                                       # para usuario final
+from .service.data_import_monday import create_items_in_group                                                # para usuario final
+from .service.creat_group_monday import create_monday_group                                                  # para usuario final
+from .service.data_export_monday import extrair_dados_paginados # uso pesquisador/interno_do_software
+from .api_client.call_api import call_monday_api                # uso pesquisador/interno_do_software
+from .service.get_id_column_monday import chamada_api_get_ids   # uso pesquisador/interno_do_software
+from .service.get_group_id_monday import get_group_id                                                        # para usuario final
+from .service.delete_group_monday import delete_monday_group                                                 # para usuario final
+from .mapper.column_map import ColunaIDMapper                   # uso pesquisador/interno_do_software
