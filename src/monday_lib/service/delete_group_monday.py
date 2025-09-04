@@ -1,10 +1,10 @@
-# Em: src/extracao_monday/service/delete_group_monday.py
-
 import logging
 from ..api_client.call_api import call_monday_api
 from ..queries.templates import QUERY_DELETE_GROUP
 from ..utils.logger import api_logger
+from ..utils.decorators import log_api_errors
 
+@log_api_errors
 def delete_monday_group(board_id: int, group_id: str) -> bool:
     """
     Deleta um grupo de um quadro específico do Monday.com.

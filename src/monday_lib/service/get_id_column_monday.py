@@ -1,7 +1,5 @@
-import logging
 from ..api_client.call_api import call_monday_api
 from ..queries.templates import QUERY_GET_COLUMN_METADATA
-
 
 def chamada_api_get_ids(board_id: str) -> dict:
     """
