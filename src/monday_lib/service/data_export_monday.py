@@ -1,10 +1,12 @@
 import logging
 from ..utils.logger import api_logger
+from ..utils.decorators import log_api_errors
 from ..utils.get_last_date import get_date
 from ..mapper.column_map import ColunaIDMapper
 from ..api_client.call_api import call_monday_api
 from ..queries.templates import QUERY_INITIAL_REQUEST, QUERY_PAGINATED_REQUEST
 
+@log_api_errors
 def extrair_dados_paginados(board_id: str, 
                             subsetor: str, 
                             filtrar_por_data: bool = True,

@@ -2,7 +2,9 @@ import logging
 from ..api_client.call_api import call_monday_api
 from ..queries.templates import QUERY_GET_GROUP_ID
 from ..utils.logger import api_logger
+from ..utils.decorators import log_api_errors
 
+@log_api_errors
 def get_group_id(board_id: int, group_name: str) -> str | None:
     """
     Busca o ID de um grupo em um quadro específico pelo seu nome.

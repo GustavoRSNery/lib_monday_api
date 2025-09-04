@@ -5,15 +5,15 @@ def parse_requirements(filename):
         lines = f.readlines()
     return [line.strip() for line in lines if line.strip() and not line.startswith("#")]
 
-texto = "Versão 0.1.1 Extração e manipulação de dados Monday.com para o Sicoob" \
-        "Versão 0.1.2 (É possível extrair items sem o filtro de Data)" \
-        "Versão 0.1.3 (Otimização da chamada API & tratamento de erros de 'response')" \
-        "Versão 0.2.0 (Refatoração completa para arquitetura modular, adiciona criação de itens em lote e funções para criar/deletar/buscar grupos, implementa logging de auditoria)"
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 setup(
     name="extracao_monday",
-    version="0.2.0",
-    description=texto,
+    version="0.2.1",
+    description="Biblioteca para automação de extração e importação no Monday.com.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Gustavo Nery",
     packages=find_packages(where="src"),
     package_dir={"": "src"},

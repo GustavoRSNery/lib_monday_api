@@ -19,4 +19,5 @@ from .api_client.call_api import call_monday_api                # uso pesquisado
 from .service.get_id_column_monday import chamada_api_get_ids   # uso pesquisador/interno_do_software
 from .service.get_group_id_monday import get_group_id                                                        # para usuario final
 from .service.delete_group_monday import delete_monday_group                                                 # para usuario final
+from .service.get_board_item_count import get_board_item_count                                               # para usuario final
 from .mapper.column_map import ColunaIDMapper                   # uso pesquisador/interno_do_software
