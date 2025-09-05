@@ -1,5 +1,4 @@
 import logging
-from ..utils.logger import api_logger
 from ..utils.decorators import log_api_errors
 from ..api_client.call_api import call_monday_api
 from ..queries.templates import QUERY_CREATE_GROUP

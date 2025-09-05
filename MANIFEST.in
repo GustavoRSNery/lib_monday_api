@@ -1,0 +1,4 @@
+graft src/monday_lib/templ
+
+include src/monday_lib/infra/.env
+include src/monday_lib/infra/fortinet_chain INIT 2026-05-17 END 2025-06-18.pem
