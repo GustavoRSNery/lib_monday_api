@@ -1,6 +1,10 @@
-# Lib. para -Extrator- e -Importador- de itens para o site Monday.com
+# Lib. para *Extrator* e *Importador* de itens para o site Monday.com
 
-Uma biblioteca Python robusta e performática para extrair e importar dados da API v2 do Monday.com, com foco em automação de processos e manipulação de grandes volumes de dados.
+Uma biblioteca Python robusta e performática para extrair e importar dados da API v2 do Monday.com, com *foco* em *automação de processos* e manipulação de *grandes volumes de dados*.
+
+Foi criada para a extração massiva de dados de varios quadros diferentes e com modelos de estrutura diferentes. Tratar e processar estes dados de forma eficaz, sem a necessidade de várias chamadas APIs.
+Com a eficiência e refinamento das querys para as chamadas, complementando com a persistencia dos metadados das colunas dos quadros já percorridos, isto facilita a manipulação para extração e importação futuras.
+Em quesito importação, também foi pensado para grandes quantidades de itens, não extrapolando a complexidade de query por minuto, para isto é realizado o cacheamento dos itens de um DataFrame (por padrão 100), aonde ele envia dados em batches para controle, e no final faz uma checagem para saber se todos os itens subiram de fato para o quadro & grupo em questão. 
 
 Este pacote foi desenvolvido para simplificar a interação com a API do Monday, abstraindo a complexidade da paginação, limites de taxa (rate limits), mapeamento de colunas e tratamento de erros.
 
@@ -10,11 +14,13 @@ Este pacote foi desenvolvido para simplificar a interação com a API do Monday,
   - **Filtragem Avançada:** Permite a filtragem de itens por data ou outros critérios.
   - **Criação de Itens em Lote (Batch):** Importa milhares de linhas de um DataFrame do Pandas de forma otimizada, respeitando os limites de complexidade da API através de lotes e pausas estratégicas.
   - **Gerenciamento de Grupos:** Funções utilitárias para criar, deletar e buscar o ID de grupos pelo nome.
-  - **Mapeamento de Colunas Inteligente:** Sistema para mapear colunas de um DataFrame para colunas do Monday, com detecção automática da coluna de nome e suporte para overrides manuais.
+  - **Mapeamento de Colunas Inteligente:** Sistema para mapear colunas de um DataFrame para colunas do Monday, com detecção automática das colunas de um quadro, mas também tem suporte para overrides(mapeamentos) manuais assim como mostra nos arquivos em /_testes.
   - **Cache de Metadados:** Armazena os metadados das colunas localmente (`.pkl`) para acelerar inicializações futuras.
   - **Logging Profissional:** Sistema de log de dois níveis:
-      - Logs de progresso (`INFO`) são exibidos no terminal durante a execução.
+      - Logs de progresso (`INFO`, `WARNING`) são exibidos no terminal durante a execução.
       - Logs de erro (`ERROR`) são salvos com detalhes completos (incluindo o corpo da requisição) em um arquivo `logs/api_errors.log` para auditoria.
+
+  *Confira o arquivo CHANGE.md para obter mais funcionalidades e adições*
 
 ## Instalação
 
@@ -64,7 +70,7 @@ MONDAY_API_URL="https://api.monday.com/v2"
 # (Opcional) Caminho para o bundle de certificados .pem (necessário em redes corporativas com proxy/firewall)
 PEM="C:/caminho/completo/para/seu/certificado.pem"
 
-# Caminho para a pasta onde o cache de metadados das colunas será salvo
+# (Opcional) Caminho para a pasta onde o cache de metadados das colunas será salvo (Este já é feito automatico sem a necessidade da criação de uma pasta local, isso é feito no venv)
 PATH_PERSIST="./persist"
 ```
 
@@ -78,16 +84,18 @@ Abaixo estão exemplos de como usar as principais funcionalidades da biblioteca 
 from monday_lib import extrair_dados_monday
 
 # Instancia de Variaveis
-nome_subsetor = "CRI"
-id_board = "8235017384"
-nome_coluna_data = "Data de Entrega"
+nome_subsetor = "CRI" # Apenas para criar um arquivo.pkl que irá salvar os dados dos grupos e colunas existentes no quadro para usar futuramente, sem fazer outra chamada API
+
+id_board = "0123456789" # obrigatorio
+
+nome_coluna_data = "Data de Entrega" # opicional, apenas se você quiser extrair os itens filtrados pela data
 data_inicio = "2025-06-01"
 data_fim = "2025-06-30"
-filtrar_grupo = "Feito"
-caminho_arquivos = r"C:\Projetos\entregas_finais\criacao"
-data_obj = pd.to_datetime(data_inicio)
-periodo_formatado = data_obj.strftime('%b/%y').lower()
-path_atividades_unicas = fr'C:\Projetos\entregas_finais\criacao\CRI\entregas_finais\CRI_elementos_formatado_{data_inicio[:-3]}.xlsx' # [:-3] tira os 3 ultimos caracteres da str data_inicio 
+
+filtrar_grupo = "Feito" # opicional, apenas se quiser extrair os itens de apenas um grupo expecifico
+
+caminho_arquivos = r"C:\Projetos\entregas_finais\criacao" # caminho aonde será salvo o arquivo Excel dos elementos e outro dos subelementos
+
 
 # Chamada de funções
 elementos, subelementos, arquivo_elementos, arquivo_subelementos = extrair_dados_monday(
@@ -179,5 +187,6 @@ print(f"IDs Criados: {relatorio['created_ids']}")
 if relatorio['errors']:
     print(f"Erros: {relatorio['errors']}")
 ```
+
 
 
