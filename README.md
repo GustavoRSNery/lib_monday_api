@@ -56,22 +56,16 @@ Este pacote foi desenvolvido para simplificar a interação com a API do Monday,
 
 ## Configuração
 
-Crie um arquivo chamado `.env` na raiz do projeto e preencha com suas credenciais e configurações.
+Altere no arquivo dentro da pasta to projeto `.env` na raiz do projeto e preencha com suas credenciais e configurações. **Alterar metodo, vamos colocar instancia de classe para infra**
 
 ```dotenv
 # .env
 
-# Token de API do Monday.com (Pessoal ou de App)
+# (Obrigatório) Token de API do Monday.com (Pessoal ou de App)
 TOKEN="eyJhbGciOiJIUzI1NiJ9.eyJ0..."
-
-# URL da API v2 do Monday.com
-MONDAY_API_URL="https://api.monday.com/v2"
 
 # (Opcional) Caminho para o bundle de certificados .pem (necessário em redes corporativas com proxy/firewall)
 PEM="C:/caminho/completo/para/seu/certificado.pem"
-
-# (Opcional) Caminho para a pasta onde o cache de metadados das colunas será salvo (Este já é feito automatico sem a necessidade da criação de uma pasta local, isso é feito no venv)
-PATH_PERSIST="./persist"
 ```
 
 ## Exemplos de Uso
@@ -86,15 +80,19 @@ from monday_lib import extrair_dados_monday
 # Instancia de Variaveis
 nome_subsetor = "CRI" # Apenas para criar um arquivo.pkl que irá salvar os dados dos grupos e colunas existentes no quadro para usar futuramente, sem fazer outra chamada API
 
-id_board = "0123456789" # obrigatorio
+# Obrigatorio
+id_board = "0123456789" 
 
-nome_coluna_data = "Data de Entrega" # opicional, apenas se você quiser extrair os itens filtrados pela data
+# Opicional, apenas se você quiser extrair os itens filtrados pela data
+nome_coluna_data = "Data de Entrega" 
 data_inicio = "2025-06-01"
 data_fim = "2025-06-30"
 
-filtrar_grupo = "Feito" # opicional, apenas se quiser extrair os itens de apenas um grupo expecifico
+# Opicional, apenas se quiser extrair os itens de apenas um grupo expecifico
+filtrar_grupo = "Feito" 
 
-caminho_arquivos = r"C:\Projetos\entregas_finais\criacao" # caminho aonde será salvo o arquivo Excel dos elementos e outro dos subelementos
+# caminho aonde será salvo o arquivo Excel dos elementos e outro dos subelementos
+caminho_arquivos = r"C:\Projetos\entregas_finais\criacao" 
 
 
 # Chamada de funções
@@ -187,6 +185,3 @@ print(f"IDs Criados: {relatorio['created_ids']}")
 if relatorio['errors']:
     print(f"Erros: {relatorio['errors']}")
 ```
-
-
-

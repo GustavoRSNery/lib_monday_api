@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from ..utils.logger import api_logger
 from ..service.get_id_column_monday import chamada_api_get_ids
 
-path_persist = os.path.join(os.path.dirname(__file__), '..', '..', 'infra','.env')
+path_persist = os.path.join(os.path.dirname(__file__), '..', 'infra','.env')
 load_dotenv(path_persist)
 PATH_PERSIST = os.getenv("PATH_PERSIST") # tecnicamente não faz sentido deixar o path persiste assim, porem se eu quiser mudar o lugar depois, fica mt facil, pq so preciso trocar no .env, e n no codigo
 

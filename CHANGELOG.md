@@ -4,6 +4,14 @@ Todo o histórico de mudanças notáveis neste projeto será documentado neste a
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.2] - 2025-09-04
+
+Versão onde foi alterado a localização dos arquivos e pastas de (INFRA, LOGS, PERSIST e TEMPL), foi movido para dentro de src/monday_lib/. para não ser necessário a criação destas.
+Também foi modificado o modo de utilização desses diretórios, foi instanciado no .env de infra, e nos arquivos necessários do path destas pastas/arquivos é apenas lido uma variável no .env, facilitando posteriormente a troca dos mesmos.
+
+### Changed
+- **Alteração da localização de pastas e arquivos:** Os arquivos/pastas de [`./logs/api_erros.log`, `./persist/.`, `./infra/.`, `./templ/.`] foram movidos para dentro da pasta `./src/monday_lib/.`, ficando assim interno da biblioteca, sem a necessidade de criar pastas e arquivos localmente.
+
 ## [0.2.1] - 2025-09-04
 
 Versão focada em adicionar funcionalidades de importação de dados, otimização de performance e no tratamento de erros.
