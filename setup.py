@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages #type:ignore
+from setuptools import setup, find_packages # type: ignore
 
 def parse_requirements(filename):
     with open(filename, encoding='utf-8') as f:
@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="extracao_monday",
-    version="0.2.1",
+    version="0.2.2",
     description="Biblioteca para automação de extração e importação no Monday.com.",
     long_description=long_description,
     long_description_content_type="text/markdown",

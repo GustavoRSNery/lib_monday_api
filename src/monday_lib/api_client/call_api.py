@@ -8,7 +8,7 @@ from datetime import datetime
 import json
 from .exceptions import APIError, APITimeoutError
 
-env = os.path.join(os.path.dirname(__file__), '..', '..', 'infra','.env')
+env = os.path.join(os.path.dirname(__file__), '..', 'infra','.env')
 load_dotenv(env)
 API_KEY = os.getenv("TOKEN")
 PEM = os.getenv("PEM")

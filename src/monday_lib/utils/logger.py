@@ -1,6 +1,7 @@
 import logging
 import os
 from logging.handlers import RotatingFileHandler
+from dotenv import load_dotenv
 
 def setup_logger(name, log_file, level=logging.ERROR):
     """
@@ -30,8 +31,8 @@ def setup_logger(name, log_file, level=logging.ERROR):
 
 
 # Arquivo de log
-LOG_FILE_PATH = os.path.join(
-    os.path.dirname(__file__), '..', '..', '..', 'logs', 'api_errors.log'
-)
+path_env = os.path.join(os.path.dirname(__file__), '..', 'infra','.env')
+load_dotenv(path_env)
+LOG_FILE_PATH = os.getenv("PATH_LOGS")
 
 api_logger = setup_logger('api_error_logger', LOG_FILE_PATH)

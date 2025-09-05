@@ -26,7 +26,7 @@ def load_queries_from_directory(directory_path: str) -> dict:
     
     return queries
 
-TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'templ')
+TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), '..', 'templ')
 _queries_dict = load_queries_from_directory(TEMPLATES_DIR)
 
 QUERY_DELETE_GROUP = _queries_dict.get('DELETE_GROUP', None)

@@ -1,3 +1,4 @@
+README.md
 setup.py
 src/extracao_monday.egg-info/PKG-INFO
 src/extracao_monday.egg-info/SOURCES.txt

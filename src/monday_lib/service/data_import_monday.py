@@ -2,7 +2,6 @@ import pandas as pd
 import json
 import time
 import logging
-import requests
 from ..api_client.call_api import call_monday_api, APITimeoutError, APIError
 from .get_board_item_count import get_board_item_count
 from ..mapper.column_map import ColunaIDMapper
