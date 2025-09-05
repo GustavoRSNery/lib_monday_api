@@ -21,7 +21,7 @@ Este pacote foi desenvolvido para simplificar a interação com a API do Monday,
 1.  **Clone o repositório:**
 
     ```bash
-    git clone https://seu-repositorio/extracao_monday.git
+    git clone https://lib_monday_api/extracao_monday.git
     cd extracao_monday
     ```
 
@@ -179,3 +179,4 @@ print(f"IDs Criados: {relatorio['created_ids']}")
 if relatorio['errors']:
     print(f"Erros: {relatorio['errors']}")
 ```
+
