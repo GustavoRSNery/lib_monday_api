@@ -1,9 +1,9 @@
 import logging
 import os
 from logging.handlers import RotatingFileHandler
-from dotenv import load_dotenv
+from infra.settings import settings
 
-def setup_logger(name, log_file, level=logging.ERROR):
+def setup_logger(name, level=logging.ERROR):
     """
     Configura um logger específico para escrever em um arquivo, com rotação.
     """
@@ -11,6 +11,7 @@ def setup_logger(name, log_file, level=logging.ERROR):
     os.makedirs(log_dir, exist_ok=True)
 
     # Cria o handler para o arquivo
+    log_file = settings.LOGS_PATH / "api_errors.log"
     handler = RotatingFileHandler(log_file, maxBytes=1024*1024, backupCount=5, encoding='utf-8')
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
@@ -30,9 +31,4 @@ def setup_logger(name, log_file, level=logging.ERROR):
     return logger
 
 
-# Arquivo de log
-path_env = os.path.join(os.path.dirname(__file__), '..', 'infra','.env')
-load_dotenv(path_env)
-LOG_FILE_PATH = os.getenv("PATH_LOGS")
-
-api_logger = setup_logger('api_error_logger', LOG_FILE_PATH)
+api_logger = setup_logger('api_error_logger')

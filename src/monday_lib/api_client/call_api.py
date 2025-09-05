@@ -2,17 +2,11 @@ import inspect
 import logging
 import os
 import requests
-from dotenv import load_dotenv
 from ..utils.logger import api_logger
+from infra.settings import settings
 from datetime import datetime
 import json
 from .exceptions import APIError, APITimeoutError
-
-env = os.path.join(os.path.dirname(__file__), '..', 'infra','.env')
-load_dotenv(env)
-API_KEY = os.getenv("TOKEN")
-PEM = os.getenv("PEM")
-MONDAY_API_URL = os.getenv("MONDAY_API_URL")
 
 
 def call_monday_api(query: str, variables: dict) -> dict:
@@ -24,20 +18,20 @@ def call_monday_api(query: str, variables: dict) -> dict:
     :return: O dicionário 'data' da resposta JSON da API.
     :raises Exception: Se a chamada HTTP ou a query GraphQL retornarem erros.
     """
-    if not API_KEY or not MONDAY_API_URL:
+    if not settings.MONDAY_API_TOKEN.get_secret_value() or not settings.MONDAY_API_URL:
         raise EnvironmentError("API_KEY ou MONDAY_API_URL não foram definidos no .env")
 
     headers = {
-        "Authorization": f"Bearer {API_KEY}",
+        "Authorization": f"Bearer {settings.MONDAY_API_TOKEN.get_secret_value()}",
         "Content-Type": "application/json"
     }
     payload = {"query": query, "variables": variables}
     try:
         response = requests.post(
-            url=MONDAY_API_URL,
+            url=settings.MONDAY_API_URL,
             headers=headers,
             json=payload,
-            verify=PEM
+            verify=str(settings.PEM_PATH) if settings.PEM_PATH else True
         )
         
         response.raise_for_status()

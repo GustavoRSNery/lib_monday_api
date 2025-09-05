@@ -1,5 +1,4 @@
 import logging
-from ..utils.logger import api_logger
 from ..utils.decorators import log_api_errors
 from ..utils.get_last_date import get_date
 from ..mapper.column_map import ColunaIDMapper

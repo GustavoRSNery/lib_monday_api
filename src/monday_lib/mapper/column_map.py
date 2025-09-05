@@ -1,13 +1,10 @@
 import logging
 import os
 import pickle
-from dotenv import load_dotenv
+from infra.settings import settings
 from ..utils.logger import api_logger
 from ..service.get_id_column_monday import chamada_api_get_ids
 
-path_persist = os.path.join(os.path.dirname(__file__), '..', 'infra','.env')
-load_dotenv(path_persist)
-PATH_PERSIST = os.getenv("PATH_PERSIST") # tecnicamente não faz sentido deixar o path persiste assim, porem se eu quiser mudar o lugar depois, fica mt facil, pq so preciso trocar no .env, e n no codigo
 
 class ColunaIDMapper:
     """Gerencia o mapeamento entre nomes de colunas e seus metadados (ID, tipo).
@@ -54,7 +51,7 @@ class ColunaIDMapper:
             raise ValueError("É obrigatório informar board_id e board_name.")
         
         self.board_id = board_id
-        self.persist_path = os.path.join(PATH_PERSIST, board_name, f"{self.board_id}.pkl")
+        self.persist_path = settings.PERSIST_PATH / board_name / f"{self.board_id}.pkl"
         self.coluna_map = {}
         
         if os.path.exists(self.persist_path):
