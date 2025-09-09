@@ -1,12 +1,13 @@
+import os
+import json
 import inspect
 import logging
-import os
 import requests
-from ..utils.logger import api_logger
-from infra.settings import settings
 from datetime import datetime
-import json
+from infra.settings import get_settings
+from ..utils.logger import api_logger
 from .exceptions import APIError, APITimeoutError
+settings = get_settings()
 
 
 def call_monday_api(query: str, variables: dict) -> dict:
@@ -18,7 +19,7 @@ def call_monday_api(query: str, variables: dict) -> dict:
     :return: O dicionário 'data' da resposta JSON da API.
     :raises Exception: Se a chamada HTTP ou a query GraphQL retornarem erros.
     """
-    if not settings.MONDAY_API_TOKEN.get_secret_value() or not settings.MONDAY_API_URL:
+    if not settings.MONDAY_API_TOKEN.get_secret_value() or not settings.MONDAY_API_TOKEN.get_secret_value():
         raise EnvironmentError("API_KEY ou MONDAY_API_URL não foram definidos no .env")
 
     headers = {

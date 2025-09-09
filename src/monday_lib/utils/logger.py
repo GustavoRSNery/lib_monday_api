@@ -1,7 +1,8 @@
 import logging
 import os
 from logging.handlers import RotatingFileHandler
-from infra.settings import settings
+from infra.settings import get_settings
+settings = get_settings()
 
 def setup_logger(name, level=logging.ERROR):
     """

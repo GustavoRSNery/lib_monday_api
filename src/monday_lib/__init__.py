@@ -17,9 +17,12 @@ from .service.creat_group_monday import create_monday_group
 from .service.get_group_id_monday import get_group_id
 from .service.delete_group_monday import delete_monday_group
 from .service.get_board_item_count import get_board_item_count
+from .service.log_management import copy_log_file
+from .infra.settings import load_settings
 
 # uso pesquisador/interno_do_software
 from .service.data_export_monday import extrair_dados_paginados
 from .api_client.call_api import call_monday_api
-from .service.get_id_column_monday import chamada_api_get_ids 
+from .service.get_id_column_monday import chamada_api_get_ids
+from .infra.settings import get_settings
 from .mapper.column_map import ColunaIDMapper
