@@ -4,13 +4,23 @@ Todo o histórico de mudanças notáveis neste projeto será documentado neste a
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [0.2.2] - 2025-09-04
+## [0.2.2] - 2025-09-09
 
-Versão onde foi alterado a localização dos arquivos e pastas de (INFRA, LOGS, PERSIST e TEMPL), foi movido para dentro de src/monday_lib/. para não ser necessário a criação destas.
-Também foi modificado o modo de utilização desses diretórios, foi instanciado no .env de infra, e nos arquivos necessários do path destas pastas/arquivos é apenas lido uma variável no .env, facilitando posteriormente a troca dos mesmos.
+Versão focada na refatoração completa do sistema de configurações para tornar a biblioteca portátil, segura e fácil de ser utilizada por outros projetos.
+
+### Added
+- **Gerenciamento de Configurações com Pydantic:** Introduzido um módulo `core/settings.py` que utiliza Pydantic para carregar, validar e gerenciar todas as configurações da aplicação.
+- **Inicialização Explícita:** Adicionada a função pública `load_settings(env_path)`, que torna obrigatória a inicialização da biblioteca pelo usuário, garantindo que a configuração seja fornecida de forma explícita e controlada.
+- **Caminhos de Arquivo Seguros e Dinâmicos:** Implementada a biblioteca `appdirs` para criar as pastas de `logs` e `persist` em diretórios de dados padrão do usuário (ex: `AppData` no Windows, `~/.local/share` no Linux), resolvendo problemas de permissão e tornando a biblioteca compatível com qualquer sistema operacional.
+- **Exceção de Configuração:** Criada a exceção customizada `ConfigurationError` para fornecer feedback claro ao usuário caso a biblioteca seja utilizada sem a devida inicialização.
 
 ### Changed
-- **Alteração da localização de pastas e arquivos:** Os arquivos/pastas de [`./logs/api_erros.log`, `./persist/.`, `./infra/.`, `./templ/.`] foram movidos para dentro da pasta `./src/monday_lib/.`, ficando assim interno da biblioteca, sem a necessidade de criar pastas e arquivos localmente.
+- **Desacoplamento da Configuração:** Todo o código da biblioteca foi refatorado para obter suas configurações através da função `get_settings()`, eliminando completamente o uso de `os.getenv` e a dependência de um arquivo `.env` com caminho fixo.
+- **Simplificação do `.env`:** O arquivo `.env` esperado pelo usuário agora só precisa conter segredos (`MONDAY_API_TOKEN`) e configurações específicas do ambiente (`PEM_PATH`), pois os caminhos de dados são gerenciados pela biblioteca.
+
+### Fixed
+- **Problema de Portabilidade:** Corrigido o problema fundamental que impedia a biblioteca de ser instalada e utilizada em outras máquinas, removendo todos os caminhos de arquivo fixos (hardcoded) do código-fonte e da configuração padrão.
+
 
 ## [0.2.1] - 2025-09-04
 

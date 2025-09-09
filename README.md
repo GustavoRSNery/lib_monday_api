@@ -27,7 +27,7 @@ Este pacote foi desenvolvido para simplificar a interação com a API do Monday,
 1.  **Clone o repositório:**
 
     ```bash
-    git clone [https://lib_monday_api/extracao_monday.git](https://github.com/GustavoRSNery/lib_monday_api)
+    git clone https://github.com/GustavoRSNery/lib_monday_api.git
     cd extracao_monday
     ```
 
@@ -71,11 +71,33 @@ PEM="C:/caminho/completo/para/seu/certificado.pem"
 ## Exemplos de Uso
 
 Abaixo estão exemplos de como usar as principais funcionalidades da biblioteca a partir de um script (ex: na sua pasta `scripts/`).
+Após a inicialização com `load_settings`, você pode usar as funções da biblioteca.
+
+## Passo 1: Inicialize a Bilioteca no seu Script
+
+No início do seu script Python, você deve chamar a função `load_settings` e passar o caminho para o seu arquivo `.env` antes de usar qualquer outra função da biblioteca.
+
+```python
+from monday_lib import load_settings
+
+# Caminho para o seu arquivo de configuração
+caminho_do_env = "C:/configuracoes/meu_projeto.env"
+
+# Inicializa a biblioteca com as suas configurações
+load_settings(caminho_do_env)
+
+# A partir daqui, a biblioteca está pronta para ser usada.
+from monday_lib import extrair_dados_monday
+# ... codigo abaixo
+```
 
 ### Exemplo 1: Extraindo Itens de um Quadro com Filtro de Data
 
 ```python
 from monday_lib import extrair_dados_monday
+
+# 1. Configuração
+load_settings("caminho/para/seu/.env")
 
 # Instancia de Variaveis
 nome_subsetor = "CRI" # Apenas para criar um arquivo.pkl que irá salvar os dados dos grupos e colunas existentes no quadro para usar futuramente, sem fazer outra chamada API
@@ -112,76 +134,69 @@ print(f"Total de {len(itens_encontrados)} itens encontrados.")
 ### Exemplo 2: Gerenciando Grupos (Buscar, Criar, Deletar)
 
 ```python
-from extracao_monday import get_group_id, create_monday_group, delete_monday_group
+from monday_lib import load_settings, get_group_id, create_monday_group
 
-BOARD_ID = 1234567890
-NOME_DO_GRUPO = "Novas Demandas Q4 2025"
+load_settings("caminho/para/seu/.env")
 
-# 1. Tenta encontrar o grupo
-id_grupo = get_group_id(board_id=BOARD_ID, group_name=NOME_DO_GRUPO)
+board_id = 1234567890
+nome_do_grupo = "Novas Demandas Q4 2025"
 
+id_grupo = get_group_id(board_id=board_id, group_name=nome_do_grupo)
 if not id_grupo:
-    # 2. Se não encontrar, cria o grupo
-    print(f"Grupo '{NOME_DO_GRUPO}' não encontrado. Criando...")
-    id_grupo = create_monday_group(board_id=BOARD_ID, group_name=NOME_DO_GRUPO)
+    print(f"Grupo '{nome_do_grupo}' não encontrado. Criando...")
+    id_grupo = create_monday_group(board_id=board_id, group_name=nome_do_grupo)
 
 if id_grupo:
     print(f"Trabalhando com o grupo ID: {id_grupo}")
-    
-    # 3. (Exemplo) Deleta o grupo
-    # sucesso = delete_monday_group(board_id=BOARD_ID, group_id=id_grupo)
-    # if sucesso:
-    #     print("Grupo deletado com sucesso.")
+
+# 3. (Exemplo) Deleta o grupo
+# sucesso = delete_monday_group(board_id=BOARD_ID, group_id=id_grupo)
+# if sucesso:
+#     print("Grupo deletado com sucesso.")
 ```
 
 ### Exemplo 3: Importando Dados de um DataFrame em Lote
 
 ```python
 import pandas as pd
-from extracao_monday import create_items_in_batches, get_group_id
+from monday_lib import load_settings, create_items_in_batches, get_group_id
+
+load_settings("caminho/para/seu/.env")
 
 # Dados e configurações
-BOARD_ID = 9382957552
-NOME_DO_GRUPO = "Importação em Lote"
-SUBSETOR = "projetos_ti"
+board_id = 1234567890
+nome_do_grupo = "Importação em Lote"
+subsetor = "projetos_ti"
 
-# 1. DataFrame com os dados a serem importados
-# A primeira coluna ('Atividade') será usada como o nome do item.
+# DataFrame com os dados a serem importados
 data = {
-    'Atividade': ['Planejamento do Sprint 10', 'Reunião de Kick-off do Projeto Phoenix'],
-    'Responsável': [61907099, 61907099], # Use IDs de usuário
+    'Atividade': ['Planejamento do Sprint 10', 'Reunião de Kick-off'],
+    'Responsável': [12345678, 12345678],
     'Prazo': ['2025-09-15', '2025-09-18'],
     'Progresso': ['A fazer', 'A fazer']
 }
 df_para_importar = pd.DataFrame(data)
 
-# 2. Mapeamento para colunas com nomes diferentes entre o DataFrame e o Monday
-# A automação cuidará das colunas com nomes iguais (ex: 'Responsável', 'Prazo').
+# Mapeamento para colunas com nomes diferentes
 mapa_de_excecoes = {
-    'Atividade': 'Nome', # DF 'Atividade' -> Monday 'Nome'
-    'Progresso': 'Status'  # DF 'Progresso' -> Monday 'Status'
+    'Atividade': 'Nome',
+    'Progresso': 'Status'
 }
 
-# 3. Garante que o grupo de destino existe
-id_grupo_destino = get_group_id(board_id=BOARD_ID, group_name=NOME_DO_GRUPO)
+id_grupo_destino = get_group_id(board_id=board_id, group_name=nome_do_grupo)
 if not id_grupo_destino:
-    # Lide com o caso de o grupo não existir (crie-o, pare o script, etc.)
-    raise Exception(f"Grupo de destino '{NOME_DO_GRUPO}' não encontrado.")
+    raise Exception(f"Grupo de destino '{nome_do_grupo}' não encontrado.")
 
-# 4. Chama a função de importação em lote
 relatorio = create_items_in_batches(
-    board_id=BOARD_ID,
+    board_id=board_id,
     group_id=id_grupo_destino,
     df=df_para_importar,
-    subsetor=SUBSETOR,
+    subsetor=subsetor,
     column_map_override=mapa_de_excecoes,
-    batch_size=200 # Tamanho do lote otimizado
+    batch_size=75
 )
 
 print("\n--- Relatório Final da Importação ---")
 print(f"Sucesso: {relatorio['success_count']}")
 print(f"Falhas: {relatorio['failed_count']}")
-print(f"IDs Criados: {relatorio['created_ids']}")
-if relatorio['errors']:
-    print(f"Erros: {relatorio['errors']}")
 ```
