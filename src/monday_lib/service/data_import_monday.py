@@ -159,10 +159,11 @@ def create_items_in_group(board_id: int,
                 logging.info(f"Lote processado em {batch_duration:.2f}s. Prosseguindo imediatamente.")
 
     # --- VERIFICAÇÃO PÓS-EXECUÇÃO ---
+    time.sleep(5)
     try:
         total_items_failed_in_504 = 0
         if batches_with_504_timeout:
-            logging.info("\n--- Verificando a quantidade de itens recebidos pelo Monday (erros: 504) ---")
+            logging.info("\n--- Verificando a quantidade de itens recebidos pelo Monday ---")
             
             # Conta quantos itens deveriam ter sido criados nos lotes que NÃO falharam criticamente
             items_in_critical_failed_batches = sum(batch['item_count'] for batch in failed_critical_batches)

@@ -5,45 +5,52 @@ Summary: Biblioteca para automação de extração e importação no Monday.com.
 Author: Gustavo Nery
 Requires-Python: >=3.11
 Description-Content-Type: text/markdown
-Requires-Dist: certifi==2024.7.4
-Requires-Dist: cffi==1.17.0
-Requires-Dist: charset-normalizer==2.0.12
-Requires-Dist: cv==1.0.0
-Requires-Dist: cycler==0.12.1
-Requires-Dist: dotenv==0.9.9
-Requires-Dist: et-xmlfile==1.1.0
-Requires-Dist: fonttools==4.56.0
-Requires-Dist: graphene==3.4.3
-Requires-Dist: graphql-core==3.2.6
-Requires-Dist: graphql-relay==3.2.0
-Requires-Dist: h11==0.14.0
-Requires-Dist: idna==3.7
-Requires-Dist: MarkupSafe==2.1.5
-Requires-Dist: numpy==2.1.0
-Requires-Dist: openpyxl==3.1.5
-Requires-Dist: outcome==1.3.0.post0
-Requires-Dist: packaging==24.1
-Requires-Dist: pandas==2.2.2
-Requires-Dist: pycparser==2.22
-Requires-Dist: pyparsing==3.2.1
-Requires-Dist: PySocks==1.7.1
-Requires-Dist: python-dateutil==2.9.0.post0
-Requires-Dist: python-dotenv==1.0.1
-Requires-Dist: pytz==2024.1
-Requires-Dist: requests==2.26.0
-Requires-Dist: setuptools==71.1.0
-Requires-Dist: six==1.16.0
-Requires-Dist: sniffio==1.3.1
-Requires-Dist: sortedcontainers==2.4.0
-Requires-Dist: trio==0.26.2
-Requires-Dist: trio-websocket==0.11.1
-Requires-Dist: typing_extensions==4.12.2
-Requires-Dist: tzdata==2024.1
-Requires-Dist: urllib3==1.26.19
-Requires-Dist: websocket-client==1.8.0
-Requires-Dist: Werkzeug==3.0.3
-Requires-Dist: wsproto==1.2.0
-Requires-Dist: accessify==0.3.1
+Requires-Dist: accessify>=0.3.1
+Requires-Dist: annotated-types>=0.7.0
+Requires-Dist: appdirs>=1.4.4
+Requires-Dist: attrs>=25.3.0
+Requires-Dist: certifi>=2024.7.4
+Requires-Dist: cffi>=1.17.0
+Requires-Dist: charset-normalizer>=2.0.12
+Requires-Dist: cv>=1.0.0
+Requires-Dist: cycler>=0.12.1
+Requires-Dist: dotenv>=0.9.9
+Requires-Dist: et-xmlfile>=1.1.0
+Requires-Dist: fonttools>=4.56.0
+Requires-Dist: graphene>=3.4.3
+Requires-Dist: graphql-core>=3.2.6
+Requires-Dist: graphql-relay>=3.2.0
+Requires-Dist: h11>=0.14.0
+Requires-Dist: idna>=3.7
+Requires-Dist: MarkupSafe>=2.1.5
+Requires-Dist: numpy>=2.1.0
+Requires-Dist: openpyxl>=3.1.5
+Requires-Dist: outcome>=1.3.0.post0
+Requires-Dist: packaging>=24.1
+Requires-Dist: pandas>=2.2.2
+Requires-Dist: pycparser>=2.22
+Requires-Dist: pydantic>=2.11.7
+Requires-Dist: pydantic-settings>=2.10.1
+Requires-Dist: pydantic_core>=2.33.2
+Requires-Dist: pyparsing>=3.2.1
+Requires-Dist: PySocks>=1.7.1
+Requires-Dist: python-dateutil>=2.9.0.post0
+Requires-Dist: python-dotenv>=1.0.1
+Requires-Dist: pytz>=2024.1
+Requires-Dist: requests>=2.26.0
+Requires-Dist: setuptools>=71.1.0
+Requires-Dist: six>=1.16.0
+Requires-Dist: sniffio>=1.3.1
+Requires-Dist: sortedcontainers>=2.4.0
+Requires-Dist: trio>=0.26.2
+Requires-Dist: trio-websocket>=0.11.1
+Requires-Dist: typing-inspection>=0.4.1
+Requires-Dist: typing_extensions>=4.12.2
+Requires-Dist: tzdata>=2024.1
+Requires-Dist: urllib3>=1.26.19
+Requires-Dist: websocket-client>=1.8.0
+Requires-Dist: Werkzeug>=3.0.3
+Requires-Dist: wsproto>=1.2.0
 Dynamic: author
 Dynamic: description
 Dynamic: description-content-type
@@ -51,190 +58,214 @@ Dynamic: requires-dist
 Dynamic: requires-python
 Dynamic: summary
 
-# Lib. para *Extrator* e *Importador* de itens para o site Monday.com
+# monday_lib: Extrator e Importador para Monday.com
 
-Uma biblioteca Python robusta e performática para extrair e importar dados da API v2 do Monday.com, com *foco* em *automação de processos* e manipulação de *grandes volumes de dados*.
+[![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Foi criada para a extração massiva de dados de varios quadros diferentes e com modelos de estrutura diferentes. Tratar e processar estes dados de forma eficaz, sem a necessidade de várias chamadas APIs.
-Com a eficiência e refinamento das querys para as chamadas, complementando com a persistencia dos metadados das colunas dos quadros já percorridos, isto facilita a manipulação para extração e importação futuras.
-Em quesito importação, também foi pensado para grandes quantidades de itens, não extrapolando a complexidade de query por minuto, para isto é realizado o cacheamento dos itens de um DataFrame (por padrão 100), aonde ele envia dados em batches para controle, e no final faz uma checagem para saber se todos os itens subiram de fato para o quadro & grupo em questão. 
+Uma biblioteca Python robusta e performática para extrair e importar dados da API v2 do Monday.com, com foco em automação de processos e manipulação de grandes volumes de dados.
 
-Este pacote foi desenvolvido para simplificar a interação com a API do Monday, abstraindo a complexidade da paginação, limites de taxa (rate limits), mapeamento de colunas e tratamento de erros.
+O objetivo deste pacote é simplificar a interação com a API do Monday, abstraindo a complexidade da paginação, limites de taxa (rate limits), mapeamento dinâmico de colunas e tratamento de erros, permitindo que o desenvolvedor foque na lógica de negócio.
+
+---
+
+## Sumário
+
+- [monday\_lib: Extrator e Importador para Monday.com](#monday_lib-extrator-e-importador-para-mondaycom)
+  - [Sumário](#sumário)
+  - [Principais Funcionalidades](#principais-funcionalidades)
+  - [Instalação](#instalação)
+  - [Configuração Obrigatória](#configuração-obrigatória)
+  - [Referência Rápida da API (Tabela de Funcionalidades)](#referência-rápida-da-api-tabela-de-funcionalidades)
+  - [Exemplos de Uso](#exemplos-de-uso)
+    - [Exemplo 1: Extraindo Itens de um Quadro](#exemplo-1-extraindo-itens-de-um-quadro)
+    - [Exemplo 2: Gerenciando Grupos](#exemplo-2-gerenciando-grupos)
+    - [Exemplo 3: Importando um DataFrame em Lote](#exemplo-3-importando-um-dataframe-em-lote)
+  - [Licença](#licença)
+
+---
 
 ## Principais Funcionalidades
 
-  - **Extração de Dados Paginada:** Busca de forma inteligente todos os itens de um quadro, lidando automaticamente com a paginação da API.
-  - **Filtragem Avançada:** Permite a filtragem de itens por data ou outros critérios.
-  - **Criação de Itens em Lote (Batch):** Importa milhares de linhas de um DataFrame do Pandas de forma otimizada, respeitando os limites de complexidade da API através de lotes e pausas estratégicas.
-  - **Gerenciamento de Grupos:** Funções utilitárias para criar, deletar e buscar o ID de grupos pelo nome.
-  - **Mapeamento de Colunas Inteligente:** Sistema para mapear colunas de um DataFrame para colunas do Monday, com detecção automática das colunas de um quadro, mas também tem suporte para overrides(mapeamentos) manuais assim como mostra nos arquivos em /_testes.
-  - **Cache de Metadados:** Armazena os metadados das colunas localmente (`.pkl`) para acelerar inicializações futuras.
-  - **Logging Profissional:** Sistema de log de dois níveis:
-      - Logs de progresso (`INFO`, `WARNING`) são exibidos no terminal durante a execução.
-      - Logs de erro (`ERROR`) são salvos com detalhes completos (incluindo o corpo da requisição) em um arquivo `logs/api_errors.log` para auditoria.
+- **Extração de Dados Paginada:** Busca de forma inteligente todos os itens de um quadro, lidando automaticamente com a paginação da API.
+- **Filtragem Avançada:** Permite a filtragem de itens por data.
+- **Criação de Itens em Lote (Batch):** Importa DataFrames do Pandas de forma otimizada, respeitando os limites de complexidade da API através de lotes e pausas estratégicas.
+- **Gerenciamento de Grupos:** Funções utilitárias para criar, deletar e buscar o ID de grupos pelo nome.
+- **Mapeamento de Colunas Inteligente:** Sistema para mapear colunas de um DataFrame para as colunas do Monday, com detecção automática da coluna de nome e suporte para *overrides* manuais.
+- **Cache de Metadados:** Armazena os metadados das colunas localmente para acelerar inicializações futuras.
+- **Logging Profissional:** Sistema de log de dois níveis: logs de progresso (`INFO`) no terminal e logs de erro (`ERROR`) detalhados salvos em um arquivo para auditoria.
 
-  *Confira o arquivo CHANGE.md para obter mais funcionalidades e adições*
+*Confira o arquivo `CHANGELOG.md` para o histórico completo de mudanças.*
+
+---
 
 ## Instalação
 
-1.  **Clone o repositório:**
+1. **Clone o repositório:**
 
     ```bash
-    git clone [https://lib_monday_api/extracao_monday.git](https://github.com/GustavoRSNery/lib_monday_api)
-    cd extracao_monday
+    git clone [https://github.com/GustavoRSNery/lib_monday_api.git](https://github.com/GustavoRSNery/lib_monday_api.git)
+    cd lib_monday_api
     ```
 
-2.  **Crie e ative um ambiente virtual:**
+2. **Crie e ative um ambiente virtual:**
 
     ```bash
     python -m venv .venv
+    
     # Windows
     .\.venv\Scripts\Activate.ps1
+    
     # Linux/macOS
     source .venv/bin/activate
     ```
 
-3.  **Instale as dependências:**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Instale o pacote em modo editável:**
-    Este passo é crucial. Ele torna seu pacote `extracao_monday` importável em todo o projeto.
+3. **Instale as dependências e o pacote:**
+    Para ambiente de desenvolvimento, instale em modo editável. Isso torna o pacote `monday_lib` importável e reflete suas alterações no código instantaneamente.
 
     ```bash
     pip install -e .
     ```
 
-## Configuração
+---
 
-Altere no arquivo dentro da pasta to projeto `.env` na raiz do projeto e preencha com suas credenciais e configurações. **Alterar metodo, vamos colocar instancia de classe para infra**
+## Configuração Obrigatória
 
-```dotenv
-# .env
+Esta biblioteca requer uma inicialização explícita para carregar as credenciais da API de forma segura.
 
-# (Obrigatório) Token de API do Monday.com (Pessoal ou de App)
-TOKEN="eyJhbGciOiJIUzI1NiJ9.eyJ0..."
+1. **Crie um arquivo `.env`**
+    No seu projeto, crie um arquivo para armazenar suas credenciais. Ex: `config.env`.
 
-# (Opcional) Caminho para o bundle de certificados .pem (necessário em redes corporativas com proxy/firewall)
-PEM="C:/caminho/completo/para/seu/certificado.pem"
-```
+    ```dotenv
+    # Arquivo: config.env
+
+    # (Obrigatório) Token de API do Monday.com
+    MONDAY_API_TOKEN="eyJhbGciOiJIUzI1NiJ9.eyJ0..."
+
+    # (Opcional) Caminho para o certificado .pem (para redes corporativas)
+    PEM_PATH="C:/caminho/completo/para/seu/certificado.pem"
+    ```
+
+2. **Inicialize a Biblioteca no seu Script**
+    No início do seu script, **antes de qualquer outra importação da `monday_lib`**, chame a função `load_settings`.
+
+    ```python
+    from monday_lib import load_settings
+
+    # Caminho para o seu arquivo de configuração
+    caminho_do_env = "caminho/para/seu/config.env"
+
+    # Inicializa a biblioteca com as suas configurações
+    load_settings(caminho_do_env)
+
+    # A partir daqui, a biblioteca está pronta para ser usada.
+    ```
+
+---
+
+## Referência Rápida da API (Tabela de Funcionalidades)
+
+| Funcionalidade          | Importação                                     | Descrição                                                               | Exemplo de Uso Rápido                                                                        |
+| :---------------------- | :--------------------------------------------- | :---------------------------------------------------------------------- | :------------------------------------------------------------------------------------------- |
+| **Configuração** | `from monday_lib import load_settings`         | (Obrigatório) Inicializa a biblioteca com as credenciais de um `.env`. | `load_settings("caminho/config.env")`                                                        |
+| **Extrair Itens** | `from monday_lib import extrair_itens_definitivo` | Extrai itens de um quadro com paginação e filtros.                      | `itens = extrair_itens_definitivo(board_id=123, subsetor="vendas")`                          |
+| **Criar Itens em Lote** | `from monday_lib import create_items_in_batches` | Importa um DataFrame para um grupo em lotes otimizados.                 | `relatorio = create_items_in_batches(board_id=123, group_id="g1", df=meu_df, subsetor="vendas")` |
+| **Criar Grupo** | `from monday_lib import create_monday_group`     | Cria um novo grupo em um quadro.                                        | `id = create_monday_group(board_id=123, group_name="Novo Grupo")`                            |
+| **Buscar ID de Grupo** | `from monday_lib import get_group_id`            | Encontra o ID de um grupo a partir do seu nome.                         | `id = get_group_id(board_id=123, group_name="Grupo Existente")`                              |
+| **Deletar Grupo** | `from monday_lib import delete_monday_group`     | Deleta um grupo a partir do seu ID.                                     | `sucesso = delete_monday_group(board_id=123, group_id="g1")`                                 |
+
+---
 
 ## Exemplos de Uso
 
-Abaixo estão exemplos de como usar as principais funcionalidades da biblioteca a partir de um script (ex: na sua pasta `scripts/`).
-
-### Exemplo 1: Extraindo Itens de um Quadro com Filtro de Data
+### Exemplo 1: Extraindo Itens de um Quadro
 
 ```python
-from monday_lib import extrair_dados_monday
+from monday_lib import load_settings, extrair_itens_definitivo
 
-# Instancia de Variaveis
-nome_subsetor = "CRI" # Apenas para criar um arquivo.pkl que irá salvar os dados dos grupos e colunas existentes no quadro para usar futuramente, sem fazer outra chamada API
+# 1. Configuração (sempre o primeiro passo)
+load_settings("caminho/para/seu.env")
 
-# Obrigatorio
-id_board = "0123456789" 
+# 2. Parâmetros
+board_id = 1234567890
+subsetor = "marketing" # Usado para o arquivo de cache das colunas
 
-# Opicional, apenas se você quiser extrair os itens filtrados pela data
-nome_coluna_data = "Data de Entrega" 
-data_inicio = "2025-06-01"
-data_fim = "2025-06-30"
-
-# Opicional, apenas se quiser extrair os itens de apenas um grupo expecifico
-filtrar_grupo = "Feito" 
-
-# caminho aonde será salvo o arquivo Excel dos elementos e outro dos subelementos
-caminho_arquivos = r"C:\Projetos\entregas_finais\criacao" 
-
-
-# Chamada de funções
-elementos, subelementos, arquivo_elementos, arquivo_subelementos = extrair_dados_monday(
-    nome_subsetor,
-    id_board,
-    nome_coluna_data,
-    caminho_arquivos,
-    data_inicio,
-    data_fim,
-    filtrar_grupo,
+# 3. Chamada da função
+itens_encontrados = extrair_itens_definitivo(
+    board_id=board_id,
+    subsetor=subsetor,
+    filtrar_por_data=False # Exemplo buscando todos os itens
 )
 
 print(f"Total de {len(itens_encontrados)} itens encontrados.")
 ```
 
-### Exemplo 2: Gerenciando Grupos (Buscar, Criar, Deletar)
+### Exemplo 2: Gerenciando Grupos
 
 ```python
-from extracao_monday import get_group_id, create_monday_group, delete_monday_group
+from monday_lib import load_settings, get_group_id, create_monday_group
 
-BOARD_ID = 1234567890
-NOME_DO_GRUPO = "Novas Demandas Q4 2025"
+load_settings("caminho/para/seu.env")
 
-# 1. Tenta encontrar o grupo
-id_grupo = get_group_id(board_id=BOARD_ID, group_name=NOME_DO_GRUPO)
+board_id = 1234567890
+nome_do_grupo = "Novas Demandas Q1 2026"
 
+id_grupo = get_group_id(board_id=board_id, group_name=nome_do_grupo)
 if not id_grupo:
-    # 2. Se não encontrar, cria o grupo
-    print(f"Grupo '{NOME_DO_GRUPO}' não encontrado. Criando...")
-    id_grupo = create_monday_group(board_id=BOARD_ID, group_name=NOME_DO_GRUPO)
+    print(f"Grupo '{nome_do_grupo}' não encontrado. Criando...")
+    id_grupo = create_monday_group(board_id=board_id, group_name=nome_do_grupo)
 
 if id_grupo:
-    print(f"Trabalhando com o grupo ID: {id_grupo}")
-    
-    # 3. (Exemplo) Deleta o grupo
-    # sucesso = delete_monday_group(board_id=BOARD_ID, group_id=id_grupo)
-    # if sucesso:
-    #     print("Grupo deletado com sucesso.")
+    print(f"Pronto para trabalhar com o grupo ID: {id_grupo}")
 ```
 
-### Exemplo 3: Importando Dados de um DataFrame em Lote
+### Exemplo 3: Importando um DataFrame em Lote
 
 ```python
 import pandas as pd
-from extracao_monday import create_items_in_batches, get_group_id
+from monday_lib import load_settings, create_items_in_batches, get_group_id
 
-# Dados e configurações
-BOARD_ID = 9382957552
-NOME_DO_GRUPO = "Importação em Lote"
-SUBSETOR = "projetos_ti"
+load_settings("caminho/para/seu.env")
 
-# 1. DataFrame com os dados a serem importados
-# A primeira coluna ('Atividade') será usada como o nome do item.
-data = {
-    'Atividade': ['Planejamento do Sprint 10', 'Reunião de Kick-off do Projeto Phoenix'],
-    'Responsável': [61907099, 61907099], # Use IDs de usuário
-    'Prazo': ['2025-09-15', '2025-09-18'],
-    'Progresso': ['A fazer', 'A fazer']
-}
-df_para_importar = pd.DataFrame(data)
+# 1. Dados e configurações
+board_id = 9382957552
+nome_do_grupo = "Importação de Tarefas"
+subsetor = "projetos_ti" # Para cache das colunas
 
-# 2. Mapeamento para colunas com nomes diferentes entre o DataFrame e o Monday
-# A automação cuidará das colunas com nomes iguais (ex: 'Responsável', 'Prazo').
+# 2. DataFrame (a primeira coluna será o nome do item por padrão)
+df = pd.DataFrame({
+    'Atividade': ['Planejamento do Módulo A', 'Desenvolvimento do Módulo B'],
+    'Responsável': [12345678, 12345678], # IDs de usuário do Monday
+    'Prazo': ['2026-01-15', '2026-01-20'],
+    'Status da Tarefa': ['A fazer', 'A fazer']
+})
+
+# 3. (Opcional) Mapeamento para colunas com nomes diferentes no Monday
 mapa_de_excecoes = {
-    'Atividade': 'Nome', # DF 'Atividade' -> Monday 'Nome'
-    'Progresso': 'Status'  # DF 'Progresso' -> Monday 'Status'
+    'Atividade': 'Nome',          # Mapeia a coluna 'Atividade' do DF para a coluna 'Nome' do Monday
+    'Status da Tarefa': 'Status'  # Mapeia 'Status da Tarefa' do DF para 'Status' no Monday
 }
 
-# 3. Garante que o grupo de destino existe
-id_grupo_destino = get_group_id(board_id=BOARD_ID, group_name=NOME_DO_GRUPO)
-if not id_grupo_destino:
-    # Lide com o caso de o grupo não existir (crie-o, pare o script, etc.)
-    raise Exception(f"Grupo de destino '{NOME_DO_GRUPO}' não encontrado.")
+# 4. Obter ID do grupo de destino
+id_grupo = get_group_id(board_id=board_id, group_name=nome_do_grupo)
+if not id_grupo:
+    raise Exception(f"Grupo de destino '{nome_do_grupo}' não encontrado.")
 
-# 4. Chama a função de importação em lote
+# 5. Executar a importação
 relatorio = create_items_in_batches(
-    board_id=BOARD_ID,
-    group_id=id_grupo_destino,
-    df=df_para_importar,
-    subsetor=SUBSETOR,
+    board_id=board_id,
+    group_id=id_grupo,
+    df=df,
+    subsetor=subsetor,
     column_map_override=mapa_de_excecoes,
-    batch_size=200 # Tamanho do lote otimizado
+    batch_size=75 # Opcional: define quantos itens enviar por requisição
 )
 
 print("\n--- Relatório Final da Importação ---")
 print(f"Sucesso: {relatorio['success_count']}")
 print(f"Falhas: {relatorio['failed_count']}")
-print(f"IDs Criados: {relatorio['created_ids']}")
-if relatorio['errors']:
-    print(f"Erros: {relatorio['errors']}")
 ```
+
+## Licença
+
+- Este projeto está licenciado sob a licenta MIT

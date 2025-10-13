@@ -1,0 +1,5 @@
+query getBoardItemCount($boardId: ID!) {
+  boards(ids: [$boardId]) {
+    items_count
+  }
+}

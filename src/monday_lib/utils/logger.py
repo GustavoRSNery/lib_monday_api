@@ -1,29 +1,22 @@
 import logging
 import os
+from pathlib import Path
 from logging.handlers import RotatingFileHandler
-from infra.settings import get_settings
-settings = get_settings()
+from ..infra.settings import get_settings
 
-def setup_logger(name, level=logging.ERROR):
-    """
-    Configura um logger específico para escrever em um arquivo, com rotação.
-    """
-    log_dir = os.path.dirname(log_file)
-    os.makedirs(log_dir, exist_ok=True)
+def setup_logger(name: str, log_file: Path, level=logging.ERROR) -> logging.Logger:
+    """Função para configurar um logger que escreve em um arquivo."""
+    
+    # Garante que o diretório de logs exista
+    log_dir = log_file.parent
+    log_dir.mkdir(parents=True, exist_ok=True)
 
-    # Cria o handler para o arquivo
-    log_file = settings.LOGS_PATH / "api_errors.log"
     handler = RotatingFileHandler(log_file, maxBytes=1024*1024, backupCount=5, encoding='utf-8')
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
 
-    # Pega o logger e configura
     logger = logging.getLogger(name)
     logger.setLevel(level)
-    
-    # IMPORTANTE: Propagate = False
-    # Impede que as mensagens de erro deste logger sejam enviadas para o logger raiz (console)
-    # Isso evita que a mesma mensagem de erro apareça duas vezes no terminal.
     logger.propagate = False
     
     if not logger.handlers:
@@ -32,4 +25,8 @@ def setup_logger(name, level=logging.ERROR):
     return logger
 
 
-api_logger = setup_logger('api_error_logger')
+settings = get_settings()
+
+LOG_FILE_PATH = settings.LOGS_PATH / "api_errors.log"
+
+api_logger = setup_logger('api_error_logger', LOG_FILE_PATH)

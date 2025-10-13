@@ -1,0 +1,5 @@
+mutation createGroup($boardId: ID!, $groupName: String!) {
+  create_group(board_id: $boardId, group_name: $groupName) {
+    id
+  }
+}
