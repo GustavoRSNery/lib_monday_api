@@ -5,8 +5,6 @@ from typing import Optional
 from pathlib import Path
 from appdirs import user_data_dir
 
-APP_NAME = "extracao_monday"
-
 class ConfigurationError(Exception):
     """Erro lançado quando a biblioteca é usada sem ser configurada."""
     pass
@@ -26,19 +24,19 @@ class Settings(BaseSettings):
     @property
     def PERSIST_PATH(self) -> Path:
         """
-        Retorna o caminho para a pasta 'persist' na raiz do projeto.
+        Retorna o caminho para a pasta 'persist' na raiz do projeto em execução.
         """
-        # Cria o caminho: /raiz_do_projeto/persist
-        path = Path(user_data_dir(appname=APP_NAME, appauthor=False)) / "persist"
+        # Path.cwd() pega o diretório de onde o script foi executado
+        path = Path.cwd() / "persist"
         path.mkdir(parents=True, exist_ok=True)
         return path
+
     @property
     def LOGS_PATH(self) -> Path:
         """
-        Retorna o caminho para a pasta 'logs' na raiz do projeto.
+        Retorna o caminho para a pasta 'logs' na raiz do projeto em execução.
         """
-        # Cria o caminho: /raiz_do_projeto/logs
-        path = Path(user_data_dir(appname=APP_NAME, appauthor=False)) / "logs"
+        path = Path.cwd() / "logs"
         path.mkdir(parents=True, exist_ok=True)
         return path
     
@@ -57,7 +55,7 @@ def load_settings(env_path: str):
     try:
         # Pydantic carrega e valida as configurações do arquivo .env especificado
         config = SettingsConfigDict(env_file=env_path, env_file_encoding="utf-8", extra='ignore')
-        _settings_instance = Settings.model_validate({}, _env_file=env_path)
+        _settings_instance = Settings(_env_file=env_path, _env_file_encoding='utf-8')
 
         # Garante que os diretórios existam após o carregamento
         _settings_instance.LOGS_PATH.mkdir(parents=True, exist_ok=True)

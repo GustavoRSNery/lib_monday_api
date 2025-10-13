@@ -4,7 +4,7 @@ import inspect
 import logging
 import requests
 from datetime import datetime
-from infra.settings import get_settings
+from ..infra.settings import get_settings
 from ..utils.logger import api_logger
 from .exceptions import APIError, APITimeoutError
 settings = get_settings()
@@ -27,12 +27,13 @@ def call_monday_api(query: str, variables: dict) -> dict:
         "Content-Type": "application/json"
     }
     payload = {"query": query, "variables": variables}
+
     try:
         response = requests.post(
             url=settings.MONDAY_API_URL,
             headers=headers,
             json=payload,
-            verify=str(settings.PEM_PATH) if settings.PEM_PATH else True
+            verify=str(settings.PEM_PATH) if settings.PEM_PATH else False
         )
         
         response.raise_for_status()

@@ -1,7 +1,7 @@
 import logging
 import os
 import pickle
-from infra.settings import get_settings
+from ..infra.settings import get_settings
 from ..utils.logger import api_logger
 from ..service.get_id_column_monday import chamada_api_get_ids
 settings = get_settings()
